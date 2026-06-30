@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KYNAos — AI-Powered Business Solutions</title>
+  <meta name="description" content="Powerful, integrated AI solutions to elevate every aspect of your business operations.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- GSAP -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
+  <!-- Split-Type -->
+  <script src="https://unpkg.com/split-type"></script>
+  <!-- Vanta.js Fog -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.fog.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Hero Section */
+    .hero {
+      flex: 1;
+      position: relative;
+      min-height: calc(100vh - 200px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .background-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .overlay-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+
+    .video-box {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .video-box video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      opacity: 0.8;
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      line-height: 1.6;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 1rem 2rem;
+      background: #004dff;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 4px;
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+
+    .hero-cta:hover {
+      background: #003ecc;
+      transform: translateY(-2px);
+    }
+
+    .hero-cta svg {
+      transition: transform 0.3s ease;
+    }
+
+    .hero-cta:hover svg {
+      transform: translateX(4px);
+    }
+
+    /* Footer */
+    .footer__inner {
+      position: relative;
+      padding: 6rem 2rem 3rem;
+      background: #0a0a0a;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .bg__grid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(13, 1fr);
+      gap: 1px;
+      opacity: 0.03;
+      pointer-events: none;
+    }
+
+    .bg-grid__element {
+      background: #fff;
+    }
+
+    .footer-container {
+      position: relative;
+      z-index: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .footer__top-wrap {
+      margin-bottom: 4rem;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer__top-wrap .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .footer__title-wrap {
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .footer__title-wrap h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .button-default {
+      display: inline-block;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+      transition: opacity 0.3s ease;
+    }
+
+    .button-default:hover {
+      opacity: 0.7;
+    }
+
+    .button__underline-link {
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    .footer__link-list {
+      list-style: none;
+    }
+
+    .footer__link-list li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer__link-md {
+      color: rgba(255, 255, 255, 0.6);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.3s ease;
+    }
+
+    .footer__link-md:hover {
+      color: #fff;
+    }
+
+    .footer__middle-wrap {
+      margin-bottom: 4rem;
+      padding-bottom: 4rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer__middle-wrap .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3rem;
+      justify-content: space-between;
+    }
+
+    .footer__link-lg {
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      font-size: 1.125rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      transition: opacity 0.3s ease;
+    }
+
+    .footer__link-lg:hover {
+      opacity: 0.7;
+    }
+
+    .footer__logo {
+      max-width: 300px;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .footer__logo svg {
+      width: 100%;
+      height: auto;
+    }
+
+    .footer__info-md {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.875rem;
+      margin: 0;
+    }
+
+    @media screen and (max-width: 768px) {
+      .bg__grid {
+        grid-template-columns: repeat(6, 1fr);
+      }
+
+      .footer__top-wrap .row,
+      .footer__middle-wrap .row {
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .footer__middle-wrap .row > div:last-child {
+        display: none;
+      }
+    }
+
+    /* ==========================================
+       Waitlist Modal - Button Expand Animation
+       ========================================== */
+    .waitlist-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2000;
+      pointer-events: none;
+      visibility: hidden;
+    }
+
+    .waitlist-modal.active {
+      pointer-events: auto;
+      visibility: visible;
+    }
+
+    .waitlist-modal__overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .waitlist-modal.active .waitlist-modal__overlay {
+      opacity: 1;
+    }
+
+    .waitlist-modal__expander {
+      position: fixed;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: #0f0f14;
+      transform: translate(-50%, -50%);
+      z-index: 2001;
+    }
+
+    .waitlist-modal__content {
+      position: relative;
+      z-index: 2002;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      opacity: 0;
+      transform: scale(0.9);
+      transition: opacity 0.4s ease 0.3s, transform 0.4s ease 0.3s;
+    }
+
+    .waitlist-modal.active .waitlist-modal__content {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .waitlist-modal__inner {
+      width: 100%;
+      max-width: 480px;
+      padding: 3rem;
+      background: rgba(15, 15, 20, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      backdrop-filter: blur(20px);
+      position: relative;
+    }
+
+    .waitlist-modal__close {
+      position: absolute;
+      top: 1.5rem;
+      right: 1.5rem;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity 0.2s ease;
+    }
+
+    .waitlist-modal__close:hover {
+      opacity: 1;
+    }
+
+    .waitlist-modal__close-line {
+      position: absolute;
+      width: 20px;
+      height: 2px;
+      background: #fff;
+      border-radius: 1px;
+    }
+
+    .waitlist-modal__close-line:first-child {
+      transform: rotate(45deg);
+    }
+
+    .waitlist-modal__close-line:last-child {
+      transform: rotate(-45deg);
+    }
+
+    .waitlist-modal__header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .waitlist-modal__title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+      color: #fff;
+    }
+
+    .waitlist-modal__subtitle {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.6;
+    }
+
+    .waitlist-modal__form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .waitlist-form__fields {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .waitlist-form__field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .waitlist-form__label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .waitlist-form__input {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 1rem;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .waitlist-form__input::placeholder {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .waitlist-form__input:focus {
+      outline: none;
+      border-color: #004dff;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .waitlist-form__submit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      width: 100%;
+      padding: 1rem 2rem;
+      background: #004dff;
+      color: #fff;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .waitlist-form__submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(0, 77, 255, 0.4);
+    }
+
+    .waitlist-form__submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .waitlist-modal__success {
+      display: none;
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    .waitlist-modal__success.active {
+      display: block;
+    }
+
+    .waitlist-modal__success-icon {
+      margin-bottom: 1.5rem;
+    }
+
+    .waitlist-modal__success h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .waitlist-modal__success p {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .waitlist-modal__error {
+      display: none;
+      padding: 1rem;
+      text-align: center;
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.1);
+      border-radius: 8px;
+      margin-top: 1rem;
+      font-size: 0.875rem;
+    }
+
+    .waitlist-modal__error.active {
+      display: block;
+    }
+
+    @media (max-width: 640px) {
+      .waitlist-modal__inner {
+        padding: 2rem;
+      }
+
+      .waitlist-modal__title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="background-video">
+      <div class="overlay-video"></div>
+      <div class="video-box">
+        <video autoplay muted loop playsinline preload="auto" style="object-fit: cover; width: 100%; height: 100%;">
+          <source src="public/video.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+    <div class="hero-content">
+      <h1>Powerful, integrated AI solutions to elevate every aspect of your business operations.</h1>
+      <p>Join the waitlist for early access and exclusive launch offers.</p>
+      <button class="hero-cta" id="openModalBtn">
+        <span>Join Waitlist</span>
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer__inner">
+    <div class="bg__grid">
+      <div class="bg-grid__element"></div>
+      <div class="bg-grid__element"></div>
+      <div class="bg-grid__element"></div>
+      <div class="bg-grid__element"></div>
+      <div class="bg-grid__element"></div>
+      <div class="bg-grid__element"></div>
+      <div class="bg-grid__element"></div>
+      <div class="bg-grid__element"></div>
+      <div class="bg-grid__element"></div>
+      <div class="bg-grid__element"></div>
+      <div class="bg-grid__element"></div>
+      <div class="bg-grid__element"></div>
+      <div class="bg-grid__element"></div>
+    </div>
+    <div class="footer-container">
+      <div class="footer__top-wrap">
+        <div class="row">
+          <div class="footer__title-wrap">
+            <h2 class="h2 u-mb-0">Good housing takes good partners. Let's Talk</h2>
+            <a data-underline-anim="" data-modal-open="true" data-modal-close="" data-wf--primary-button--variant="large" href="#contact-modal" class="button-default w-inline-block">
+              <div class="button__label-wrap">
+                <p data-underline-link="alt" class="button__underline-link">Partner with us →</p>
+              </div>
+            </a>
+          </div>
+          <div>
+            <ul role="list" class="footer__link-list w-list-unstyled">
+              <li><p class="footer__link-md has-pointer">hello@eleos.la</p></li>
+              <li><p class="footer__link-md cc-phone">+1 (310) 961-5400</p></li>
+            </ul>
+          </div>
+          <div>
+            <ul role="list" class="footer__link-list w-list-unstyled">
+              <li><p class="footer__info-md has-pointer">Los Angeles, Ca</p></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer__middle-wrap">
+        <div class="row">
+          <div>
+            <ul role="list" class="footer__link-list w-list-unstyled">
+              <li><a data-underline-link="big-single" href="/about" class="footer__link-lg">About</a></li>
+              <li><a data-underline-link="big-single" href="/impact" class="footer__link-lg">Impact</a></li>
+              <li><a data-underline-link="big-single" href="/all-projects" class="footer__link-lg">Projects</a></li>
+              <li><p data-modal-open="true" data-underline-link="big-single" class="footer__link-lg">Contact</p></li>
+            </ul>
+          </div>
+          <div>
+            <ul role="list" class="footer__link-list w-list-unstyled">
+              <li><a data-underline-link="single" href="https://www.instagram.com/eleos.la/" target="_blank" class="footer__link-md">Instagram</a></li>
+              <li><a data-underline-link="single" href="https://www.linkedin.com/company/eleos-ventures/" target="_blank" class="footer__link-md">Linkedin</a></li>
+              <li><a data-underline-link="single" href="https://x.com/eleos_la" target="_blank" class="footer__link-md">X (Twitter)</a></li>
+            </ul>
+          </div>
+          <div>
+            <ul role="list" class="footer__link-list w-list-unstyled">
+              <li><a data-underline-link="single" href="/legal-pages/privacy-policy" class="footer__link-md">Privacy Policy</a></li>
+              <li><a data-underline-link="single" href="/legal-pages/terms-of-services" class="footer__link-md">Terms of Services</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer__logo">
+        <span style="font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; color: rgba(255,255,255,0.4);">KYNAos</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Waitlist Modal -->
+  <div class="waitlist-modal" id="waitlistModal">
+    <div class="waitlist-modal__overlay" id="waitlistOverlay"></div>
+    <div class="waitlist-modal__expander" id="waitlistExpander"></div>
+    <div class="waitlist-modal__content" id="waitlistContent">
+      <div class="waitlist-modal__inner">
+        <button class="waitlist-modal__close" id="closeWaitlistModal" aria-label="Close">
+          <span class="waitlist-modal__close-line"></span>
+          <span class="waitlist-modal__close-line"></span>
+        </button>
+        <div class="waitlist-modal__header">
+          <h2 class="waitlist-modal__title">Join the Waitlist</h2>
+          <p class="waitlist-modal__subtitle">Be the first to experience KYNAos. Early access and exclusive launch offers.</p>
+        </div>
+        <form class="waitlist-modal__form" id="waitlistFormModal">
+          <div class="waitlist-form__fields">
+            <div class="waitlist-form__field">
+              <label for="firstName" class="waitlist-form__label">First Name</label>
+              <input type="text" id="firstName" name="First-Name" class="waitlist-form__input" placeholder="Jane" autocomplete="given-name">
+            </div>
+            <div class="waitlist-form__field">
+              <label for="email" class="waitlist-form__label">Email</label>
+              <input type="email" id="email" name="email" class="waitlist-form__input" placeholder="jane@company.com" required autocomplete="email">
+            </div>
+          </div>
+          <button type="submit" class="waitlist-form__submit">
+            <span>Join Waitlist</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8H13M13 8L8 3M13 8L8 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </form>
+        <div class="waitlist-modal__success" id="successMessageModal">
+          <div class="waitlist-modal__success-icon">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="24" fill="#004dff" opacity="0.2"/><path d="M16 24L22 30L32 18" stroke="#004dff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3>You're on the list!</h3>
+          <p>We'll be in touch soon with early access.</p>
+        </div>
+        <div class="waitlist-modal__error" id="errorMessageModal"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

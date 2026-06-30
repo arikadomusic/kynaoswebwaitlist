@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 *)",
+      "Bash(open *)",
+      "Bash(npm install *)",
+      "Bash(node *)",
+      "Bash(lsof -ti:8000)",
+      "Bash(xargs kill *)",
+      "Bash(curl -s http://localhost:8000)",
+      "Bash(npm run *)",
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(git checkout *)",
+      "Bash(grep -o '--y:[^;]*' /Users/arikado/kynaoswebwaitlist/cta.md)",
+      "Bash(grep -oE '--y:[^;\"]+' /Users/arikado/kynaoswebwaitlist/cta.md)",
+      "Bash(grep -o '--y.*' /Users/arikado/kynaoswebwaitlist/cta.md)",
+      "Bash(curl -s \"https://cdn.prod.website-files.com/68a5787bba0829184628bd51/css/osmo-v2.shared.a24438211.min.css\")",
+      "Bash(curl -s \"https://slater.app/16596/45154.css\")",
+      "Bash(grep -oE '--y[^;]+;')",
+      "Bash(curl -s \"https://slater.app/16596/45446.css\")",
+      "Bash(curl -s \"https://slater.app/16596/45511.css\")",
+      "Bash(curl -s \"https://slater.app/16596/45156.css\")",
+      "Bash(curl -s \"https://slater.app/16596/55554.js\")",
+      "Bash(curl -s \"https://cdn.prod.website-files.com/68a5787bba0829184628bd51/js/osmo-v2.a0aa6ca1.b7683852b8a60d8e.js\")",
+      "Bash(curl *)",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}
