@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { gsap } from 'gsap';
+import emailjs from '@emailjs/browser';
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -192,17 +193,8 @@ export default function Home() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
-    const formData = new FormData(form);
-    const data = {
-      firstName: formData.get('firstName'),
-      lastName: formData.get('lastName'),
-      email: formData.get('email'),
-      company: formData.get('company'),
-      message: formData.get('message')
-    };
 
     const submitBtn = form.querySelector('.submit-btn');
-    const successMsg = document.getElementById('ctaSuccessMsg');
     const errorMsg = document.getElementById('ctaErrorMsg');
 
     if (submitBtn) {
@@ -211,39 +203,23 @@ export default function Home() {
     }
 
     try {
-      const response = await fetch('https://formspree.io/f/xwvdnbka', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
+      await emailjs.sendForm('service_tpmigfb', 'template_5bxi6da', form, 'onSHKHxwVtCdEIRng');
 
-      if (response.ok) {
-        // Hide form box and show success dialog
-        const formBox = form.querySelector('.form-box');
-        if (formBox) formBox.style.display = 'none';
+      // Hide form box and show success dialog
+      const formBox = form.querySelector('.form-box');
+      if (formBox) formBox.style.display = 'none';
 
-        // Show success dialog
-        if (successDialogRef.current) {
-          successDialogRef.current.style.display = 'flex';
-          gsap.fromTo(successDialogRef.current,
-            { opacity: 0, scale: 0.8, y: 20 },
-            { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: 'power2.out' }
-          );
-        }
-      } else {
-        const result = await response.json();
-        if (errorMsg) {
-          errorMsg.textContent = result.error || 'Something went wrong.';
-          errorMsg.classList.add('active');
-        }
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Submit';
-        }
+      // Show success dialog
+      if (successDialogRef.current) {
+        successDialogRef.current.style.display = 'flex';
+        gsap.fromTo(successDialogRef.current,
+          { opacity: 0, scale: 0.8, y: 20 },
+          { opacity: 1, scale: 1, y: 0, duration: 0.4, ease: 'power2.out' }
+        );
       }
     } catch (error) {
       if (errorMsg) {
-        errorMsg.textContent = 'Connection error. Please try again.';
+        errorMsg.textContent = 'Something went wrong. Please try again.';
         errorMsg.classList.add('active');
       }
       if (submitBtn) {
@@ -256,11 +232,6 @@ export default function Home() {
   const handleNewsletterSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
-    const formData = new FormData(form);
-    const data = {
-      firstName: formData.get('firstName'),
-      email: formData.get('email')
-    };
 
     const submitBtn = form.querySelector('.subscribe-footer');
     const successMsg = document.querySelector('.newsletter-success');
@@ -272,26 +243,14 @@ export default function Home() {
     }
 
     try {
-      const response = await fetch('https://formspree.io/f/xwvdnbka', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
+      await emailjs.sendForm('service_tpmigfb', 'template_5bxi6da', form, 'onSHKHxwVtCdEIRng');
 
-      if (response.ok) {
-        form.reset();
-        if (successMsg) successMsg.style.display = 'block';
-        if (errorMsg) errorMsg.style.display = 'none';
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Submit';
-        }
-      } else {
-        if (errorMsg) errorMsg.style.display = 'block';
-        if (submitBtn) {
-          submitBtn.disabled = false;
-          submitBtn.textContent = 'Submit';
-        }
+      form.reset();
+      if (successMsg) successMsg.style.display = 'block';
+      if (errorMsg) errorMsg.style.display = 'none';
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit';
       }
     } catch (error) {
       if (errorMsg) errorMsg.style.display = 'block';
