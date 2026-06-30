@@ -202,8 +202,16 @@ export default function Home() {
       submitBtn.textContent = 'Submitting...';
     }
 
+    const templateParams = {
+      firstName: form.querySelector('[name="firstName"]').value,
+      lastName: form.querySelector('[name="lastName"]').value,
+      email: form.querySelector('[name="email"]').value,
+      company: form.querySelector('[name="company"]').value,
+      message: form.querySelector('[name="message"]').value
+    };
+
     try {
-      await emailjs.sendForm('service_tpmigfb', 'template_5bxi6da', form, 'onSHKHxwVtCdEIRng');
+      await emailjs.send('service_tpmigfb', 'template_c0us09d', templateParams, 'onSHKHxwVtCdEIRng');
 
       // Hide form box and show success dialog
       const formBox = form.querySelector('.form-box');
@@ -242,8 +250,16 @@ export default function Home() {
       submitBtn.textContent = '...';
     }
 
+    const templateParams = {
+      firstName: form.querySelector('[name="firstName"]').value,
+      email: form.querySelector('[name="email"]').value,
+      message: 'Newsletter subscription',
+      company: '',
+      lastName: ''
+    };
+
     try {
-      await emailjs.sendForm('service_tpmigfb', 'template_5bxi6da', form, 'onSHKHxwVtCdEIRng');
+      await emailjs.send('service_tpmigfb', 'template_c0us09d', templateParams, 'onSHKHxwVtCdEIRng');
 
       form.reset();
       if (successMsg) successMsg.style.display = 'block';

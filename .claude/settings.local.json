@@ -24,7 +24,9 @@
       "Bash(curl -s \"https://cdn.prod.website-files.com/68a5787bba0829184628bd51/js/osmo-v2.a0aa6ca1.b7683852b8a60d8e.js\")",
       "Bash(curl *)",
       "Bash(git init *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)"
     ]
   }
 }
