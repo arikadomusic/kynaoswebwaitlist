@@ -15,6 +15,9 @@ const spaceGrotesk = Space_Grotesk({
 export const metadata = {
   title: 'KYNAos — AI-Powered Business Solutions',
   description: 'Powerful, integrated AI solutions to elevate every aspect of your business operations.',
+  icons: {
+    icon: '/kynasymbol.png',
+  },
 };
 
 export default function RootLayout({ children }) {
